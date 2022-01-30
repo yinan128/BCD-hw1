@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block navbar %}
+    <div class="container sticky-top">
+        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+          <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+              intelligent workplace @CMU
+          </a>
+          <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li><a href='{% url 'heating' %}' class="nav-link px-2 link-secondary">heating</a></li>
+            <li><a href='{% url 'ventilation' %}' class="nav-link px-2 link-dark">ventilation</a></li>
+            <li><a href='{% url 'ac' %}' class="nav-link px-2 link-dark">AC</a></li>
+            <li><a href='{% url 'lighting' %}' class="nav-link px-2 link-dark">lighting</a></li>
+            <li><a href="#" class="nav-link px-2 link-dark">About</a></li>
+          </ul>
+          <div class="col-md-3 text-end">
+          </div>
+        </header>
+    </div>
+{% endblock %}
+
+{#  <div class="container">#}
+{#    <header class="d-flex justify-content-center py-3">#}
+{#      <ul class="nav nav-pills">#}
+{#        <li class="nav-item"><a href="{% url 'heating' %}" class="nav-link active" aria-current="page">heating</a></li>#}
+{#        <li class="nav-item"><a href="{% url 'ventilation' %}" class="nav-link">ventilation</a></li>#}
+{#        <li class="nav-item"><a href="{% url 'ac' %}" class="nav-link">AC</a></li>#}
+{#        <li class="nav-item"><a href="{% url 'lighting' %}" class="nav-link">lighting</a></li>#}
+{#        <li class="nav-item"><a href="#" class="nav-link">About</a></li>#}
+{#      </ul>#}
+{#    </header>#}
+{#  </div>#}

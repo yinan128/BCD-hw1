@@ -1,0 +1,19 @@
+.plan_layers {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.plan_layers > img {
+    position:absolute;
+    left:10%;
+    top:15%
+}
+
+.center_table {
+    margin-left: 35%;
+    margin-right: 35%;
+}
+
+.legends {
+    padding-top: 700px;
+}

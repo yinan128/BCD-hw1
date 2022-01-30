@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>iw</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'iw/bootstrap.min.css'%}" type='text/css'>
+    <link rel="stylesheet" href="{% static 'iw/myStyle.css'%}" type='text/css'>
+    <script src="{% static 'iw/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'iw/myJS.js' %}"></script>
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+              font-size: 3.5rem;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+{% block navbar %}
+{% endblock %}
+
+<div class="plan_layers">
+    {% for plan in plans %}
+        {% if plan.picture %}
+            <img src="{% url 'planImage' plan.id %}" alt="{{ plan.description }}" id="facilityImage{{ plan.id }}" style="z-index:0">
+        {% endif %}
+    {% endfor %}
+</div>
+
+
+<div class="legends">
+    <table class="table table-borderless table-sm center_table" style="width:30%">
+        {% for legend in legends %}
+            <tr>
+                <td><button class="btn btn-primary">Legend</button></td>
+                <td><button id="facility{{ legend.id }}" class="btn btn-outline-primary" onclick="placeLayer({{ legend.id }})">{{ legend.name }}</button></td>
+                <td><a class="btn btn-link" href="#" role="button">Link</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+
+</body>
+</html>
