@@ -44,9 +44,11 @@
     <table class="table table-borderless table-sm center_table" style="width:30%">
         {% for legend in legends %}
             <tr>
-                <td><button class="btn btn-primary">Legend</button></td>
+                <td><span style='background:#8DD3C7; display: inline-block; width: 40px; height: 40px'></span></td>
+{#                <td><button class="btn btn-primary">Legend</button></td>#}
                 <td><button id="facility{{ legend.id }}" class="btn btn-outline-primary" onclick="placeLayer({{ legend.id }})">{{ legend.name }}</button></td>
-                <td><a class="btn btn-link" href="#" role="button">Link</a></td>
+                <td><a class="btn btn-link" href="#" role="button">See more</a></td>
+{#                <td><a href="#" class="btn-link link-secondary">See more</a></td>#}
             </tr>
         {% endfor %}
     </table>

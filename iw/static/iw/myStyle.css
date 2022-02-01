@@ -1,12 +1,17 @@
 .plan_layers {
     margin-left: 10%;
     margin-right: 10%;
-}
+    width: 80%;}
+
 
 .plan_layers > img {
     position:absolute;
-    left:10%;
-    top:15%
+    left:5%;
+    top:15%;
+    width: auto;
+    height: auto;
+    max-width: 90%;
+    /*max-height: 90%;*/
 }
 
 .center_table {
