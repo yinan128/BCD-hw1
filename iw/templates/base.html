@@ -31,13 +31,13 @@
 {% block navbar %}
 {% endblock %}
 
-<div class="plan_layers">
-    {% for plan in plans %}
-        {% if plan.picture %}
-            <img src="{% url 'planImage' plan.id %}" alt="{{ plan.description }}" id="facilityImage{{ plan.id }}" style="z-index:0">
-        {% endif %}
-    {% endfor %}
-</div>
+{#<div class="plan_layers">#}
+{#    {% for plan in plans %}#}
+{#        {% if plan.picture %}#}
+{#            <img src="{% url 'planImage' plan.id %}" alt="{{ plan.description }}" id="facilityImage{{ plan.id }}" style="z-index:0">#}
+{#        {% endif %}#}
+{#    {% endfor %}#}
+{#</div>#}
 
 
 <div class="legends">
@@ -47,12 +47,34 @@
                 <td><span style='background:#8DD3C7; display: inline-block; width: 40px; height: 40px'></span></td>
 {#                <td><button class="btn btn-primary">Legend</button></td>#}
                 <td><button id="facility{{ legend.id }}" class="btn btn-outline-primary" onclick="placeLayer({{ legend.id }})">{{ legend.name }}</button></td>
-                <td><a class="btn btn-link" href="#" role="button">See more</a></td>
+{#                <td><a class="btn btn-link" href="#" role="button" data-toggle="modal" data-target="#exampleModal">See more</a></td>#}
 {#                <td><a href="#" class="btn-link link-secondary">See more</a></td>#}
+                <!-- Button trigger modal -->
+                <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="modalBtn_{{ legend.id }}">more</button></td>
             </tr>
         {% endfor %}
     </table>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 </body>
 </html>
