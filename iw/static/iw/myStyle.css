@@ -22,3 +22,9 @@
 .legends {
     padding-top: 700px;
 }
+
+.responsiveImg {
+    width: auto;
+    height: auto;
+    max-width: 90%;
+}
