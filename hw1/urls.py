@@ -25,4 +25,8 @@ urlpatterns = [
     path('systems/ac/', views.ac, name='ac'),
     path('systems/lighting/', views.lighting, name='lighting'),
     path('planImage/<int:id>', views.getPlanImage, name='planImage'),
+    path('additionalImage/<int:id>', views.getAdditionalImage),
+    # only used for passing the url from template to js.
+    path('additionalImage/', views.getAdditionalImage, name='additionalImage'),
+    path('getSpecification/<int:id>', views.getSpecification, name='specs'),
 ]

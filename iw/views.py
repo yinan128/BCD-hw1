@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404, HttpResponse
-from iw.models import Facility
+from iw.models import Facility, AdditionalPicture
 import json
 
 
@@ -44,3 +44,31 @@ def getPlanImage(request, id):
     if not image.picture:
         raise Http404
     return HttpResponse(image.picture, content_type=image.content_type)
+
+def getAdditionalImage(request, id):
+    image = get_object_or_404(AdditionalPicture, id = id)
+    if not image.content:
+        raise Http404
+    return HttpResponse(image.content, content_type=image.content_type)
+
+
+def getSpecification(request, id):
+    response_data = []
+    facility = Facility.objects.get(id=id)
+    picList = []
+    for pic in facility.additionalpicture_set.all():
+        picList.append(pic.id)
+
+    response_data.append({
+        "id": facility.id,
+        "manufacturer": facility.manufacturer,
+        "dateInstalled": facility.dateInstalled.isoformat(),
+        "count": facility.count,
+        "description": facility.description,
+        "pictureIds": picList
+    })
+
+    response_json = json.dumps(response_data)
+    response = HttpResponse(response_json, content_type='application/json')
+    response['Access-Control-Allow-Origin'] = '*'
+    return response
