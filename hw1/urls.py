@@ -29,4 +29,5 @@ urlpatterns = [
     # only used for passing the url from template to js.
     path('additionalImage/', views.getAdditionalImage, name='additionalImage'),
     path('getSpecification/<int:id>', views.getSpecification, name='specs'),
+    path('realtime', views.realtime, name='realtime'),
 ]
