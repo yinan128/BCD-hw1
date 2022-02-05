@@ -1,17 +1,18 @@
 .plan_layers {
     margin-left: 10%;
     margin-right: 10%;
-    width: 80%;}
+    width: 80%;
+    text-align:center;
+}
 
 
 .plan_layers > img {
     position:absolute;
-    left:5%;
-    top:15%;
+    transform: translate(-50%, 0);
+    left:50%;
     width: auto;
     height: auto;
-    max-width: 90%;
-    /*max-height: 90%;*/
+    max-width: min(90%, 1500px);
 }
 
 .center_table {
@@ -20,7 +21,7 @@
 }
 
 .legends {
-    padding-top: 700px;
+    padding-top: min(50%, 800px);
 }
 
 .responsiveImg {
