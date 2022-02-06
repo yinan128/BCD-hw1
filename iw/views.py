@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 import pandas as pd
 from django.conf import settings
 import os
+import pytz
 
 
 # Create your views here.
@@ -191,7 +192,7 @@ def convertToMyFormat(year:int, month:int, day:int):
 def realtime(request):
     context = {}
     ac = weatherAcquirer()
-    current_time = datetime.now()
+    current_time = datetime.now(tz = pytz.timezone('America/New_York'))
     year, month, day = convertToMyFormat(current_time.year, current_time.month, current_time.day)
     ac.acquireDailyTemp("KPIT", year, month, day)
     ac.sortByTimestamp()
