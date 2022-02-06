@@ -18,16 +18,24 @@ from django.urls import path
 from iw import views
 
 urlpatterns = [
+    # admin
     path('admin/', admin.site.urls),
+
+    # pages
     path('', views.homepage),
     path('systems/heating/', views.heating, name='heating'),
     path('systems/ventilation/', views.ventilation, name='ventilation'),
     path('systems/ac/', views.ac, name='ac'),
     path('systems/lighting/', views.lighting, name='lighting'),
+
+
+    # api
     path('planImage/<int:id>', views.getPlanImage, name='planImage'),
     path('additionalImage/<int:id>', views.getAdditionalImage),
-    # only used for passing the url from template to js.
+        # only used for passing the url from template to js.
     path('additionalImage/', views.getAdditionalImage, name='additionalImage'),
-    path('getSpecification/<int:id>', views.getSpecification, name='specs'),
     path('realtime', views.realtime, name='realtime'),
+    path('get-historic/<int:id>', views.getHistoricData, name='historic'),
+    path('getSpecification/<int:id>', views.getSpecification, name='specs'),
+
 ]

@@ -144,3 +144,95 @@ function pictureFormatter(ids) {
     }
     return result
 }
+
+
+function acquireHistoric(id) {
+    let target_modal = document.getElementById("historicModal_" + id)
+    if (target_modal == null) {
+        $.ajax({
+            url: "/get-historic/" + id,
+            dataType : "json",
+            success: updateHistoricModals,
+            error: updateError
+        })
+    } else {
+        showHistoricModal(id)
+    }
+}
+
+function showHistoricModal(id) {
+    let myModal = new bootstrap.Modal(document.getElementById('historicModal_' + id), {
+        keyboard: false
+    })
+    myModal.show()
+}
+
+function updateHistoricModals(response) {
+    $("#modals")[0].innerHTML += historicModalFormatter(response);
+    document.getElementById("scriptForHistoric_" + response.id).innerHTML += historicScriptFormatter(response)
+    showHistoricModal(response.id)
+}
+
+function historicScriptFormatter(response) {
+    let ts = []
+    for (let i = 0; i < response.timestamps.length; i++) {
+        ts.push("'" + response.timestamps[i] + "'")
+    }
+
+    let replacements =
+        {
+            "%ts%":ts,
+            "%vals%":response.values,
+            "%ID%":response.id,
+        }
+
+    let placeholder =
+        '        let trace_%ID% = {\n' +
+        '            x: [%ts%],\n' +
+        '            y: [%vals%],\n' +
+        '            type: \'scatter\'\n' +
+        '        };\n' +
+        '        let data_%ID% = [trace_%ID%];\n' +
+        '        let layout_%ID% = {\n' +
+        '            title: "nothing"\n' +
+        '        };\n' +
+        '        Plotly.newPlot(\'historicChart_%ID%\', data_%ID%, layout_%ID%);\n'
+
+    placeholder = placeholder.replace(/%\w+%/g, function(all) {
+       return replacements[all] || all;
+    });
+
+    return placeholder
+}
+
+function historicModalFormatter(response) {
+    let replacements =
+        {
+            "%ID%":response.id,
+        }
+
+    let placeholder =
+        '<div class="modal fade" id="historicModal_%ID%" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">\n' +
+        '  <div class="modal-dialog modal-fullscreen">\n' +
+        '    <div class="modal-content">\n' +
+        '      <div class="modal-header">\n' +
+        '        <h5 class="modal-title" id="exampleModalLabel">Historic Data</h5>\n' +
+        '        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>\n' +
+        '      </div>\n' +
+        '      <div class="modal-body">\n' +
+        '          <div class="container" id="historicChart_%ID%">\n' +
+        '          </div>\n' +
+        '      </div>\n' +
+        '      <div class="modal-footer">\n' +
+        '        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>\n' +
+        '      </div>\n' +
+        '    </div>\n' +
+        '  </div>\n' +
+        '</div>'
+
+    placeholder = placeholder.replace(/%\w+%/g, function(all) {
+       return replacements[all] || all;
+    });
+
+    return placeholder
+}

@@ -1,11 +1,13 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404, HttpResponse
-from iw.models import Facility, AdditionalPicture
+from iw.models import Facility, AdditionalPicture, HistoricData
 import json
 import requests
 from collections import OrderedDict
 from datetime import datetime, timedelta
-
+import pandas as pd
+from django.conf import settings
+import os
 
 
 # Create your views here.
@@ -26,6 +28,7 @@ def ventilation(request):
     context = {}
     context['plans'] = Facility.objects.filter(category="floorplan")
     context['legends'] = Facility.objects.filter(category="ventilation")
+    context['his_items'] = HistoricData.objects.filter(category="ventilation")
     return render(request, 'ventilation.html', context=context)
 
 
@@ -201,3 +204,28 @@ def realtime(request):
     context['temps'] = list(ac.temperatures.values())
     context['title'] = "realtime temperature of Pittsburgh on {month}/{day}/{year}".format(year=year, month=month, day=day)
     return render(request, 'realtime.html', context=context)
+
+
+def getHistoricData(request, id):
+    hData = get_object_or_404(HistoricData, id=id)
+    path = os.path.join(settings.CSV_ROOT, hData.filename)
+    df = pd.read_csv(path, parse_dates=True, index_col='dt')
+    selectedPeriod = df[(df.index > "2018-1-1") & (df.index < "2018-1-31")]
+    dts = selectedPeriod.index
+    dts = dts.strftime("%m-%d/%H:%M")
+    # dts = dts.strftime("%H:%M")
+    dts = dts.to_numpy().tolist()
+    values = selectedPeriod.value.to_numpy().tolist()
+    print(type(dts[0]), type(values[0]))
+
+
+    response_data = {
+        "timestamps": dts,
+        "values": values,
+        "id": id
+    }
+    response_json = json.dumps(response_data)
+    response = HttpResponse(response_json, content_type='application/json')
+    response['Access-Control-Allow-Origin'] = '*'
+    return response
+

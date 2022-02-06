@@ -23,3 +23,8 @@ class AdditionalPicture(models.Model):
     content = models.FileField(blank=True)
     content_type = models.CharField(max_length=20)
     owner = models.ForeignKey(Facility, on_delete=SET_NULL, null=True)
+
+class HistoricData(models.Model):
+    label = models.CharField(max_length=30)
+    category = models.CharField(max_length=20)
+    filename = models.CharField(max_length=30)
