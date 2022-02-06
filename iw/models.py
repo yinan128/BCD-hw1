@@ -28,3 +28,4 @@ class HistoricData(models.Model):
     label = models.CharField(max_length=30)
     category = models.CharField(max_length=20)
     filename = models.CharField(max_length=30)
+    title = models.CharField(max_length=30, default="no name")

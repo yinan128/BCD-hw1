@@ -223,7 +223,8 @@ def getHistoricData(request, id):
     response_data = {
         "timestamps": dts,
         "values": values,
-        "id": id
+        "id": id,
+        "title": hData.title
     }
     response_json = json.dumps(response_data)
     response = HttpResponse(response_json, content_type='application/json')

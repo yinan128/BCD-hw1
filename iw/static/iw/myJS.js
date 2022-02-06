@@ -184,6 +184,7 @@ function historicScriptFormatter(response) {
             "%ts%":ts,
             "%vals%":response.values,
             "%ID%":response.id,
+            "%title%":response.title,
         }
 
     let placeholder =
@@ -194,7 +195,7 @@ function historicScriptFormatter(response) {
         '        };\n' +
         '        let data_%ID% = [trace_%ID%];\n' +
         '        let layout_%ID% = {\n' +
-        '            title: "nothing"\n' +
+        '            title: "%title%"\n' +
         '        };\n' +
         '        Plotly.newPlot(\'historicChart_%ID%\', data_%ID%, layout_%ID%);\n'
 
