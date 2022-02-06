@@ -34,6 +34,7 @@ urlpatterns = [
     path('additionalImage/<int:id>', views.getAdditionalImage),
         # only used for passing the url from template to js.
     path('additionalImage/', views.getAdditionalImage, name='additionalImage'),
+    path('systemDiagram/<int:id>', views.getSystemDiagram, name='systemDiagram'),
     path('realtime', views.realtime, name='realtime'),
     path('get-historic/<int:id>', views.getHistoricData, name='historic'),
     path('getSpecification/<int:id>', views.getSpecification, name='specs'),

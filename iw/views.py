@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404, HttpResponse
-from iw.models import Facility, AdditionalPicture, HistoricData
+from iw.models import Facility, AdditionalPicture, HistoricData, SystemDiagram
 import json
 import requests
 from collections import OrderedDict
@@ -22,6 +22,8 @@ def heating(request):
     context = {}
     context['plans'] = Facility.objects.filter(category="floorplan")
     context['legends'] = Facility.objects.filter(category="heating")
+    context['his_items'] = HistoricData.objects.filter(category="heating")
+    context['diagrams'] = SystemDiagram.objects.filter(category="heating")
     return render(request, 'heating.html', context=context)
 
 
@@ -30,6 +32,7 @@ def ventilation(request):
     context['plans'] = Facility.objects.filter(category="floorplan")
     context['legends'] = Facility.objects.filter(category="ventilation")
     context['his_items'] = HistoricData.objects.filter(category="ventilation")
+    context['diagrams'] = SystemDiagram.objects.filter(category="ventilation")
     return render(request, 'ventilation.html', context=context)
 
 
@@ -37,6 +40,8 @@ def ac(request):
     context = {}
     context['plans'] = Facility.objects.filter(category="floorplan")
     context['legends'] = Facility.objects.filter(category="ac")
+    context['his_items'] = HistoricData.objects.filter(category="ac")
+    context['diagrams'] = SystemDiagram.objects.filter(category="ac")
     return render(request, 'ac.html', context=context)
 
 
@@ -44,6 +49,8 @@ def lighting(request):
     context = {}
     context['plans'] = Facility.objects.filter(category="floorplan")
     context['legends'] = Facility.objects.filter(category="lighting")
+    context['his_items'] = HistoricData.objects.filter(category="lighting")
+    context['diagrams'] = SystemDiagram.objects.filter(category="lighting")
     return render(request, 'lighting.html', context=context)
 
 
@@ -55,6 +62,13 @@ def getPlanImage(request, id):
 
 def getAdditionalImage(request, id):
     image = get_object_or_404(AdditionalPicture, id = id)
+    if not image.content:
+        raise Http404
+    return HttpResponse(image.content, content_type=image.content_type)
+
+
+def getSystemDiagram(request, id):
+    image = get_object_or_404(SystemDiagram, id=id)
     if not image.content:
         raise Http404
     return HttpResponse(image.content, content_type=image.content_type)

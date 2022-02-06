@@ -29,3 +29,10 @@ class HistoricData(models.Model):
     category = models.CharField(max_length=20)
     filename = models.CharField(max_length=30)
     title = models.CharField(max_length=30, default="no name")
+
+class SystemDiagram(models.Model):
+    content = models.FileField(blank=True)
+    content_type = models.CharField(max_length=20)
+    category = models.CharField(max_length=20)
+    title = models.CharField(max_length=30)
+    init = models.BooleanField()

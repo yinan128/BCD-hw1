@@ -5,4 +5,5 @@ from iw.models import *
 admin.site.register(Facility)
 admin.site.register(AdditionalPicture)
 admin.site.register(HistoricData)
+admin.site.register(SystemDiagram)
 
