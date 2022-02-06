@@ -38,120 +38,21 @@
 {% block navbar %}
 {% endblock %}
 
-<div class="plan_layers">
-    {% for plan in plans %}
-        {% if plan.picture %}
-            <img src="{% url 'planImage' plan.id %}" alt="{{ plan.description }}" id="facilityImage{{ plan.id }}" style="z-index:0">
-        {% endif %}
-    {% endfor %}
-</div>
+{% block layers %}
+{% endblock %}
+
+{% block legends %}
+{% endblock %}
+
+{% block systemDiagrams %}
+{% endblock %}
+
+{% block historic %}
+{% endblock %}
 
 {% block chart %}
 {% endblock %}
 
-<div class="legends">
-    <table class="table table-borderless table-sm center_table" style="width:30%">
-        {% for legend in legends %}
-            <tr>
-                <td><span style='background:#8DD3C7; display: inline-block; width: 40px; height: 40px'></span></td>
-                <td><button id="facility{{ legend.id }}" class="btn btn-outline-primary" onclick="placeLayer({{ legend.id }})">{{ legend.name }}</button></td>
-                <td><a class="btn btn-link link-secondary" role="button" onclick="seeMoreOn({{ legend.id }})">See more</a></td>
-                <!-- Button trigger modal -->
-{#                <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="modalBtn_{{ legend.id }}">more</button></td>#}
-            </tr>
-        {% endfor %}
-    </table>
-</div>
-
-<div id="modals"></div>
-
-
-
-{#<!-- Modal -->#}
-{#<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">#}
-{#  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">#}
-{#    <div class="modal-content">#}
-{#      <div class="modal-header">#}
-{#        <h5 class="modal-title" id="exampleModalLabel">More Information</h5>#}
-{#        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>#}
-{#      </div>#}
-{#      <div class="modal-body">#}
-{#          <div class="container">#}
-{#              <!-- row 1 table-->#}
-{#              <div class="row">#}
-{#              <div class="col"></div>#}
-{#              <div class="col-11">#}
-{#                  <h5>Specifications</h5>#}
-{#                  <table class="table caption-top">#}
-{#                    <tbody>#}
-{#                        <tr>#}
-{#                          <th scope="row">manufacturer</th>#}
-{#                          <td>Mark</td>#}
-{#                        </tr>#}
-{#                        <tr>#}
-{#                          <th scope="row">date</th>#}
-{#                          <td>2020-1-1</td>#}
-{#                        </tr>#}
-{#                        <tr>#}
-{#                          <th scope="row">count</th>#}
-{#                          <td>10</td>#}
-{#                        </tr>#}
-{#                    </tbody>#}
-{#                  </table>#}
-{#                  <br>#}
-{#              </div>#}
-{#              <div class="col"></div>#}
-{#              </div>#}
-{##}
-{#              <!-- row 2 long text-->#}
-{#              <div class="row">#}
-{#                  <div class="col"></div>#}
-{#                  <div class="col-11">#}
-{#                      <h5>Description</h5>#}
-{#                        A solid desiccant based ventilation system has been installed#}
-{#                        at the roof to provide#}
-{#                        ventilation to the IW (see Figure 2 1)1). The ventilation system is comprised of two major#}
-{#                        parts: SEMCO Revolution Unit REV 2250 and SEMCO enthalpy recovery module#}
-{#                        FRV 2000. Basically, this is an advanced ventilation unit with all the breakthrough#}
-{#                        technologies integrated into one package assembly. The ventilation unit combines the#}
-{#                        strengths of an advanced DX cooling cycle, variable spe ed compressor, and optimal#}
-{#                        control strategies with the unique dehumidification capability offered by an active#}
-{#                        desiccant wheel . By connected to the heat recovery pre conditioner, the overall system#}
-{#                        offers the ultimate performance in the transfer of total e nergy. Theoretically, this#}
-{#                        ventilation unit can be operated either as an air conditioning system assisted IW’s#}
-{#                        cooling/heating or as a Dedicated Outside Air System (DOAS) which processes only#}
-{#                        the ventilation air. In the IW, the SEMCO is operated upon DOAS mode hand ling 100%#}
-{#                        of the ventilation air. The processed air is ducted to the IW ventilation system through#}
-{#                        under floor ducting system.#}
-{#                      <br>#}
-{#                      <br>#}
-{#                  </div>#}
-{#                  <div class="col"></div>#}
-{#              </div>#}
-{##}
-{#              <!-- row 3 pictures-->#}
-{#              <div class="row">#}
-{#                  <div class="col"></div>#}
-{#                  <div class="col-11">#}
-{#                      <h5>Pictures</h5>#}
-{#                  </div>#}
-{#                  <div class="col"></div>#}
-{#              </div>#}
-{#              <!-- row 3.5 pictures-->#}
-{#              <div class="row">#}
-{#                  <div class="col"></div>#}
-{#                  <img src="{% url 'planImage' 3 %}" class="col-11" alt="...">#}
-{#                  <div class="col"></div>#}
-{#              </div>#}
-{#          </div>#}
-{#      </div>#}
-{#      <div class="modal-footer">#}
-{#        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>#}
-{#        <button type="button" class="btn btn-primary">Save changes</button>#}
-{#      </div>#}
-{#    </div>#}
-{#  </div>#}
-{#</div>#}
 
 <script>
     {#var static_url = "{% get_static_prefix %}";#}

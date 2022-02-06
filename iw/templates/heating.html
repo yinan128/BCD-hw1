@@ -11,7 +11,7 @@
             <li><a href='{% url 'ventilation' %}' class="nav-link px-2 link-dark">ventilation</a></li>
             <li><a href='{% url 'ac' %}' class="nav-link px-2 link-dark">AC</a></li>
             <li><a href='{% url 'lighting' %}' class="nav-link px-2 link-dark">lighting</a></li>
-            <li><a href="#" class="nav-link px-2 link-dark">About</a></li>
+            <li><a href="{% url 'realtime' %}" class="nav-link px-2 link-dark">realtime</a></li>
           </ul>
           <div class="col-md-3 text-end">
           </div>
@@ -19,14 +19,30 @@
     </div>
 {% endblock %}
 
-{#  <div class="container">#}
-{#    <header class="d-flex justify-content-center py-3">#}
-{#      <ul class="nav nav-pills">#}
-{#        <li class="nav-item"><a href="{% url 'heating' %}" class="nav-link active" aria-current="page">heating</a></li>#}
-{#        <li class="nav-item"><a href="{% url 'ventilation' %}" class="nav-link">ventilation</a></li>#}
-{#        <li class="nav-item"><a href="{% url 'ac' %}" class="nav-link">AC</a></li>#}
-{#        <li class="nav-item"><a href="{% url 'lighting' %}" class="nav-link">lighting</a></li>#}
-{#        <li class="nav-item"><a href="#" class="nav-link">About</a></li>#}
-{#      </ul>#}
-{#    </header>#}
-{#  </div>#}
+
+{% block layers %}
+    <div class="plan_layers">
+        {% for plan in plans %}
+            {% if plan.picture %}
+                <img src="{% url 'planImage' plan.id %}" alt="{{ plan.description }}" id="facilityImage{{ plan.id }}" style="z-index:0">
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}
+
+
+{% block legends %}
+    <div class="legends">
+    <table class="table table-borderless table-sm center_table" style="width:30%">
+        {% for legend in legends %}
+            <tr>
+                <td><span style='background:#8DD3C7; display: inline-block; width: 40px; height: 40px'></span></td>
+                <td><button id="facility{{ legend.id }}" class="btn btn-outline-primary" onclick="placeLayer({{ legend.id }})">{{ legend.name }}</button></td>
+                <td><a class="btn btn-link link-secondary" role="button" onclick="seeMoreOn({{ legend.id }})">See more</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+    </div>
+    {#    placeholder for modals#}
+    <div id="modals"></div>
+{% endblock %}
