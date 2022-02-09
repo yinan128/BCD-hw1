@@ -16,8 +16,8 @@
 }
 
 .center_table {
-    margin-left: 35%;
-    margin-right: 35%;
+    /*margin-left: 35%;*/
+    /*margin-right: 35%;*/
 }
 
 .legends {
@@ -28,4 +28,8 @@
     width: auto;
     height: auto;
     max-width: 90%;
+}
+
+.center_text{
+    text-align:center;
 }

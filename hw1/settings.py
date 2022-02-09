@@ -128,3 +128,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = BASE_DIR / 'images/'
 
 CSV_ROOT = BASE_DIR / 'csvFiles/'
+
+TEMPLATE_ROOT = BASE_DIR / 'iw/templates'

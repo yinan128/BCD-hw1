@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404, HttpResponse
-from iw.models import Facility, AdditionalPicture, HistoricData, SystemDiagram
+from iw.models import Facility, AdditionalPicture, HistoricData, SystemDiagram, MainSys, SubSys
 import json
 import requests
 from collections import OrderedDict
@@ -17,41 +17,21 @@ def homepage(request):
     context['plans'] = Facility.objects.filter(category="floorplan")
     return render(request, 'homepage.html', context=context)
 
-
-def heating(request):
+# make sure that h,v,ac,lighting is 1,2,3,4.
+def systemPage(request, id):
     context = {}
     context['plans'] = Facility.objects.filter(category="floorplan")
-    context['legends'] = Facility.objects.filter(category="heating")
-    context['his_items'] = HistoricData.objects.filter(category="heating")
-    context['diagrams'] = SystemDiagram.objects.filter(category="heating")
-    return render(request, 'heating.html', context=context)
-
-
-def ventilation(request):
-    context = {}
-    context['plans'] = Facility.objects.filter(category="floorplan")
-    context['legends'] = Facility.objects.filter(category="ventilation")
-    context['his_items'] = HistoricData.objects.filter(category="ventilation")
-    context['diagrams'] = SystemDiagram.objects.filter(category="ventilation")
-    return render(request, 'ventilation.html', context=context)
-
-
-def ac(request):
-    context = {}
-    context['plans'] = Facility.objects.filter(category="floorplan")
-    context['legends'] = Facility.objects.filter(category="ac")
-    context['his_items'] = HistoricData.objects.filter(category="ac")
-    context['diagrams'] = SystemDiagram.objects.filter(category="ac")
-    return render(request, 'ac.html', context=context)
-
-
-def lighting(request):
-    context = {}
-    context['plans'] = Facility.objects.filter(category="floorplan")
-    context['legends'] = Facility.objects.filter(category="lighting")
-    context['his_items'] = HistoricData.objects.filter(category="lighting")
-    context['diagrams'] = SystemDiagram.objects.filter(category="lighting")
-    return render(request, 'lighting.html', context=context)
+    mainSys = MainSys.objects.get(id=id)
+    subSyss = mainSys.subsys_set.all()
+    dic = {}
+    for subSys in subSyss:
+        dic[subSys] = subSys.facility_set.all()
+    context['legends'] = dic
+    context['numOfCols'] = subSyss.count()
+    context['his_items'] = HistoricData.objects.filter(category=mainSys.name)
+    context['diagrams'] = SystemDiagram.objects.filter(category=mainSys.name)
+    template = os.path.join(settings.TEMPLATE_ROOT, mainSys.name + ".html")
+    return render(request, template, context=context)
 
 
 def getPlanImage(request, id):
@@ -244,4 +224,25 @@ def getHistoricData(request, id):
     response = HttpResponse(response_json, content_type='application/json')
     response['Access-Control-Allow-Origin'] = '*'
     return response
+
+
+def getSubsys(request, id):
+    subsys = SubSys.objects.get(id=id)
+    sysDiagrams = subsys.systemdiagram_set.all()
+    diagramIDs = []
+    for sysDiagram in sysDiagrams:
+        diagramIDs.append(sysDiagram.id)
+
+    response_data = {
+        "id" : id,
+        "picIDs": diagramIDs,
+        # change later into descpt
+        "description": subsys.name
+    }
+
+    response_json = json.dumps(response_data)
+    response = HttpResponse(response_json, content_type='application/json')
+    response['Access-Control-Allow-Origin'] = '*'
+    return response
+
 

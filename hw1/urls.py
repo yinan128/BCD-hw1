@@ -23,10 +23,7 @@ urlpatterns = [
 
     # pages
     path('', views.homepage),
-    path('systems/heating/', views.heating, name='heating'),
-    path('systems/ventilation/', views.ventilation, name='ventilation'),
-    path('systems/ac/', views.ac, name='ac'),
-    path('systems/lighting/', views.lighting, name='lighting'),
+    path('system/<int:id>', views.systemPage, name='system'),
 
 
     # api
@@ -34,9 +31,12 @@ urlpatterns = [
     path('additionalImage/<int:id>', views.getAdditionalImage),
         # only used for passing the url from template to js.
     path('additionalImage/', views.getAdditionalImage, name='additionalImage'),
-    path('systemDiagram/<int:id>', views.getSystemDiagram, name='systemDiagram'),
+    path('systemDiagram/<int:id>', views.getSystemDiagram),
+        # only used for passing the url from template to js.
+    path('systemDiagram/', views.getSystemDiagram, name='systemDiagram'),
     path('realtime', views.realtime, name='realtime'),
     path('get-historic/<int:id>', views.getHistoricData, name='historic'),
     path('getSpecification/<int:id>', views.getSpecification, name='specs'),
+    path('getSubSystem/<int:id>', views.getSubsys, name='subsys'),
 
 ]

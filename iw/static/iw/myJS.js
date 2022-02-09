@@ -237,3 +237,102 @@ function historicModalFormatter(response) {
 
     return placeholder
 }
+
+
+function revealSysDiagram(id) {
+    let target_modal = document.getElementById("sys_modal_" + id)
+    if (target_modal == null) {
+        $.ajax({
+            url: "/getSubSystem/" + id,
+            dataType : "json",
+            success: updateSysModals,
+            error: updateError
+        })
+    } else {
+        showSysModal(id)
+    }
+}
+
+function updateSysModals(response) {
+    $(response).each(function() {
+        $("#modals")[0].innerHTML += sysModalFormatter(this);
+        showSysModal(this.id)
+    })
+}
+
+
+// response should return id, descpt, picids.
+function sysModalFormatter(response) {
+    let replacements_placeholder =
+        {
+            "%ID%":response.id,
+            "%DESCRIPTION%": response.description,
+        }
+    let placeholder =
+        '<div class="modal fade" id="sys_modal_%ID%" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">\n' +
+        '  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">\n' +
+        '    <div class="modal-content">\n' +
+        '      <div class="modal-header">\n' +
+        '        <h5 class="modal-title" id="exampleModalLabel">More Information</h5>\n' +
+        '        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>\n' +
+        '      </div>\n' +
+        '      <div class="modal-body">\n' +
+        '          <div class="container">\n' +
+        '              <!-- row 1 long text-->\n' +
+        '              <div class="row">\n' +
+        '                  <div class="col"></div>\n' +
+        '                  <div class="col-11">\n' +
+        '                      <h5>Description</h5>\n' +
+        '                        %DESCRIPTION%\n' +
+        '                      <br>\n' +
+        '                      <br>\n' +
+        '                  </div>\n' +
+        '                  <div class="col"></div>\n' +
+        '              </div>\n' +
+        '              <!-- row 2 pictures-->\n' +
+        '              <div class="row">\n' +
+        '                  <div class="col"></div>\n' +
+        '                  <div class="col-11">\n' +
+        '                      <h5>system diagrams</h5>\n' +
+        '                  </div>\n' +
+        '                  <div class="col"></div>\n' +
+        '              </div>\n' +
+        '              <!-- row 3.5 pictures-->\n' +
+                            sysPictureFormatter(response.picIDs) +
+        '          </div>\n' +
+        '      </div>\n' +
+        '      <div class="modal-footer">\n' +
+        '        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>\n' +
+        '      </div>\n' +
+        '    </div>\n' +
+        '  </div>\n' +
+        '</div>'
+
+    placeholder = placeholder.replace(/%\w+%/g, function(all) {
+       return replacements_placeholder[all] || all;
+    });
+
+    return placeholder
+}
+
+function sysPictureFormatter(ids) {
+    let result = ""
+    for (let i=0; i< ids.length; i++) {
+        let id = ids[i]
+        result +=
+            '<div class="row">\n' +
+            ' <div class="col"></div>\n' +
+            ' <img src="' + sysDiagram_url + id + '" class="col-11" alt="...">\n' +
+            ' <div class="col"></div>\n' +
+            '</div>\n'
+    }
+    return result
+}
+
+
+function showSysModal(id) {
+    let myModal = new bootstrap.Modal(document.getElementById('sys_modal_' + id), {
+        keyboard: false
+    })
+    myModal.show()
+}

@@ -7,10 +7,10 @@
               intelligent workplace @CMU
           </a>
           <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href='{% url 'heating' %}' class="nav-link px-2 link-dark">heating</a></li>
-            <li><a href='{% url 'ventilation' %}' class="nav-link px-2 link-dark">ventilation</a></li>
-            <li><a href='{% url 'ac' %}' class="nav-link px-2 link-secondary">AC</a></li>
-            <li><a href='{% url 'lighting' %}' class="nav-link px-2 link-dark">lighting</a></li>
+            <li><a href='{% url 'system' 1%}' class="nav-link px-2 link-dark">heating</a></li>
+            <li><a href='{% url 'system' 2%}' class="nav-link px-2 link-dark">ventilation</a></li>
+            <li><a href='{% url 'system' 3%}' class="nav-link px-2 link-secondary">AC</a></li>
+            <li><a href='{% url 'system' 4%}' class="nav-link px-2 link-dark">lighting</a></li>
             <li><a href="{% url 'realtime' %}" class="nav-link px-2 link-dark">realtime</a></li>
           </ul>
           <div class="col-md-3 text-end">
@@ -31,16 +31,25 @@
 
 
 {% block legends %}
-    <div class="legends">
-    <table class="table table-borderless table-sm center_table" style="width:30%">
-        {% for legend in legends %}
-            <tr>
-                <td><span style='background:#8DD3C7; display: inline-block; width: 40px; height: 40px'></span></td>
-                <td><button id="facility{{ legend.id }}" class="btn btn-outline-primary" onclick="placeLayer({{ legend.id }})">{{ legend.name }}</button></td>
-                <td><a class="btn btn-link link-secondary" role="button" onclick="seeMoreOn({{ legend.id }})">See more</a></td>
-            </tr>
-        {% endfor %}
-    </table>
+    <div class="container legends">
+    <div class="row row-cols-{{ numOfCols }} gx-5">
+    {% for subSys, facilites in legends.items %}
+        <div class="col">
+            <a class="btn-lg btn-link link-secondary" role="button" onclick="revealSysDiagram({{ subSys.id }})">{{ subSys.name }}</a>
+            <hr>
+            <table class="table table-borderless table-sm">
+                {% for facility in facilites %}
+                <tr>
+                    <td><span style='background:#8DD3C7; display: inline-block; width: 40px; height: 40px'></span></td>
+                    <td><button id="facility{{ facility.id }}" class="btn btn-outline-primary" onclick="placeLayer({{ facility.id }})">{{ facility.name }}</button></td>
+                    <td><a class="btn btn-link link-secondary" role="button" onclick="seeMoreOn({{ facility.id }})">See more</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% endfor %}
+
+    </div>
     </div>
     {#    placeholder for modals#}
     <div id="modals"></div>
@@ -55,39 +64,5 @@
                 <script id="scriptForHistoric_{{ item.id }}"></script>
             {% endfor %}
         </div>
-    {% endif %}
-{% endblock %}
-
-{% block systemDiagrams %}
-    {% if diagrams %}
-    <div class="container"><div class="row"><div class="col-11">
-        <h5>System Diagrams</h5>
-        <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
-          <div class="carousel-inner">
-
-              {% for diagram in diagrams %}
-                  {% if diagram.init %}
-                      <div class="carousel-item active" data-bs-interval="4000">
-                  {% else %}
-                      <div class="carousel-item" data-bs-interval="4000">
-                  {% endif %}
-                  <img src="{% url 'systemDiagram' diagram.id%}" class="d-block w-100" alt="...">
-                  <div class="carousel-caption d-none d-md-block">
-                    <h5>{{ diagram.title }}</h5>
-                  </div>
-                  </div>
-              {% endfor %}
-
-              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Previous</span>
-              </button>
-              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Next</span>
-              </button>
-        </div>
-
-    </div><div class="col-1"></div></div></div>
     {% endif %}
 {% endblock %}

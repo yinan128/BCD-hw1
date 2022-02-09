@@ -44,9 +44,6 @@
 {% block legends %}
 {% endblock %}
 
-{% block systemDiagrams %}
-{% endblock %}
-
 {% block historic %}
 {% endblock %}
 
@@ -55,9 +52,8 @@
 
 
 <script>
-    {#var static_url = "{% get_static_prefix %}";#}
-    {#var media_url = "{% get_media_prefix %}";#}
     var picture_url = "{% url 'additionalImage' %}";
+    var sysDiagram_url = "{% url 'systemDiagram' %}";
 </script>
 
 
