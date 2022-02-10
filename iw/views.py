@@ -14,7 +14,8 @@ import pytz
 # Create your views here.
 def homepage(request):
     context = {}
-    context['plans'] = Facility.objects.filter(category="floorplan")
+    context['images'] = Facility.objects.filter(category="homepageImage")
+    context['greeting'] = ""
     return render(request, 'homepage.html', context=context)
 
 # make sure that h,v,ac,lighting is 1,2,3,4.

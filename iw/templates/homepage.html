@@ -18,3 +18,21 @@
         </header>
     </div>
 {% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-11">
+                {% for image in images %}
+                    {% if image.picture %}
+                        <img src="{% url 'planImage' image.id %}" alt="{{ image.description }}" class="img-fluid">
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+
+{% endblock %}
