@@ -15,13 +15,9 @@
     max-width: min(90%, 1500px);
 }
 
-.center_table {
-    /*margin-left: 35%;*/
-    /*margin-right: 35%;*/
-}
 
 .legends {
-    padding-top: min(50%, 800px);
+    padding-top: min(70%, 900px);
 }
 
 .responsiveImg {

@@ -20,7 +20,15 @@ def homepage(request):
 # make sure that h,v,ac,lighting is 1,2,3,4.
 def systemPage(request, id):
     context = {}
-    context['plans'] = Facility.objects.filter(category="floorplan")
+
+    if id == 4:
+        context['plans'] = Facility.objects.filter(category="floorplan_lighting")
+        context['percent'] = 80
+        context['pix'] = 900
+    else:
+        context['plans'] = Facility.objects.filter(category="floorplan")
+        context['percent'] = 50
+        context['pix'] = 800
     mainSys = MainSys.objects.get(id=id)
     subSyss = mainSys.subsys_set.all()
     dic = {}
@@ -236,8 +244,7 @@ def getSubsys(request, id):
     response_data = {
         "id" : id,
         "picIDs": diagramIDs,
-        # change later into descpt
-        "description": subsys.name
+        "description": subsys.description
     }
 
     response_json = json.dumps(response_data)

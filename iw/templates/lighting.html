@@ -31,7 +31,8 @@
 
 
 {% block legends %}
-    <div class="container legends">
+{#    <div class="container legends">#}
+    <div class="container" style="padding-top: min({{ percent }}%, {{ pix }}px)">
     <div class="row row-cols-{{ numOfCols }} gx-5">
     {% for subSys, facilites in legends.items %}
         <div class="col">
@@ -40,7 +41,7 @@
             <table class="table table-borderless table-sm">
                 {% for facility in facilites %}
                 <tr>
-                    <td><span style='background:#8DD3C7; display: inline-block; width: 40px; height: 40px'></span></td>
+                    <td><span style='background-color:rgb({{ facility.color_r }}, {{ facility.color_g }}, {{ facility.color_b }}); display: inline-block; width: 40px; height: 40px'></span></td>
                     <td><button id="facility{{ facility.id }}" class="btn btn-outline-primary" onclick="placeLayer({{ facility.id }})">{{ facility.name }}</button></td>
                     <td><a class="btn btn-link link-secondary" role="button" onclick="seeMoreOn({{ facility.id }})">See more</a></td>
                 </tr>

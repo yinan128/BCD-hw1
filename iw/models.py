@@ -4,14 +4,15 @@ from django.db import models
 from django.db.models import SET_NULL
 
 class MainSys(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=40)
 
     def __repr__(self):
         return "mainsys_" + self.name
 
 class SubSys(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=40)
     mainSys = models.ForeignKey(MainSys, on_delete=SET_NULL, null=True)
+    description = models.CharField(max_length=2000, default="")
 
     def __repr__(self):
         return "subsys_" + self.name
@@ -26,8 +27,11 @@ class Facility(models.Model):
 
     picture = models.FileField(blank=True)
     content_type = models.CharField(max_length=20)
+    color_r = models.IntegerField(default=255)
+    color_g = models.IntegerField(default=255)
+    color_b = models.IntegerField(default=255)
 
-    manufacturer = models.CharField(max_length=20)
+    manufacturer = models.CharField(max_length=40)
     dateInstalled = models.DateField()
     count = models.IntegerField(default=10)
     description = models.CharField(max_length=4000)
