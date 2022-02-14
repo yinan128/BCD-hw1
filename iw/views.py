@@ -254,3 +254,6 @@ def getSubsys(request, id):
     return response
 
 
+def getStatic(request, filename):
+    file = os.path.join(settings.STATIC_IW, filename)
+    return HttpResponse(file)

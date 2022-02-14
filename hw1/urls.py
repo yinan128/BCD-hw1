@@ -38,5 +38,6 @@ urlpatterns = [
     path('get-historic/<int:id>', views.getHistoricData, name='historic'),
     path('getSpecification/<int:id>', views.getSpecification, name='specs'),
     path('getSubSystem/<int:id>', views.getSubsys, name='subsys'),
+    path('static/iw/<str:filename>', views.getStatic, name='staticFiles'),
 
 ]
