@@ -197,16 +197,32 @@ def realtime(request):
     ac = weatherAcquirer()
     current_time = datetime.now(tz = pytz.timezone('America/New_York'))
     year, month, day = convertToMyFormat(current_time.year, current_time.month, current_time.day)
-    ac.acquireDailyTemp("KPIT", year, month, day)
+    # ac.acquireDailyTemp("KPIT", year, month, day)
+    ac.acquireMonthlyTemp("KPIT", year, month)
     ac.sortByTimestamp()
 
     dates = []
     for unix_ts in ac.temperatures.keys():
-        dates.append((datetime.fromtimestamp(unix_ts) - timedelta(hours=2)).strftime('%H:%M'))
+        dates.append((datetime.fromtimestamp(unix_ts) - timedelta(hours=7)).strftime('%m/%d-%H:%M'))
+
+    monthMap = {
+        "01": "January",
+        "02": "February",
+        "03": "March",
+        "04": "April",
+        "05": "May",
+        "06": "June",
+        "07": "July",
+        "08": "August",
+        "09": "September",
+        "10": "October",
+        "11": "November",
+        "12": "December"
+    }
 
     context['dates'] = dates
     context['temps'] = list(ac.temperatures.values())
-    context['title'] = "realtime temperature of Pittsburgh on {month}/{day}/{year}".format(year=year, month=month, day=day)
+    context['title'] = "temperature of Pittsburgh for {month}/{year}".format(month=monthMap[month], year=year)
     return render(request, 'realtime.html', context=context)
 
 
@@ -214,7 +230,7 @@ def getHistoricData(request, id):
     hData = get_object_or_404(HistoricData, id=id)
     path = os.path.join(settings.CSV_ROOT, hData.filename)
     df = pd.read_csv(path, parse_dates=True, index_col='dt')
-    selectedPeriod = df[(df.index > "2018-1-1") & (df.index < "2018-1-31")]
+    selectedPeriod = df[(df.index > "2018-1-1") & (df.index < "2018-12-31")]
     dts = selectedPeriod.index
     dts = dts.strftime("%m-%d/%H:%M")
     # dts = dts.strftime("%H:%M")
