@@ -6,6 +6,7 @@ import requests
 from collections import OrderedDict
 from datetime import datetime, timedelta
 import pandas as pd
+import numpy as np
 from django.conf import settings
 import os
 import pytz
@@ -235,8 +236,10 @@ def getHistoricData(request, id):
     dts = dts.strftime("%m-%d/%H:%M")
     # dts = dts.strftime("%H:%M")
     dts = dts.to_numpy().tolist()
-    values = selectedPeriod.value.to_numpy().tolist()
-    print(type(dts[0]), type(values[0]))
+    # values = selectedPeriod.value.to_numpy().tolist()
+    values = selectedPeriod.value.to_numpy()
+    values = np.where(values == "/", 0, values)
+    values = values.tolist()
 
 
     response_data = {
